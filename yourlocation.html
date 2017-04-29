@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>AirSTech</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="css/creative.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+	  
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="inbox.html">AirSTech</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+
+	 <div id="map"  class="m"></div>
+    <script>
+        var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+		  center: {lat:24.774265, lng: 	46.738586},
+          mapTypeId: 'roadmap'
+        });
+		    infoWindow = new google.maps.InfoWindow;
+		
+
+		//---------------extra code than the original-----------------------------------------
+		      /*  if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent( '');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }*/
+		
+		//-------------------/extra code than the original--------------------------------------
+		
+		
+		//-------------------user select location-------------------------------
+		    google.maps.event.addListener(map, 'click', function( event ){
+     // alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
+
+  var myLatlng = new google.maps.LatLng(event.latLng.lat(),event.latLng.lng() );
+  var humidity=40;
+  var cloud=30;
+  
+  var textArray = [
+    'yes1.png',
+    'no1.png'
+];
+var randomNumber = Math.floor(Math.random()*textArray.length);
+
+//audioElement.setAttribute('src', textArray[randomNumber]);
+  
+     var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map ,
+	  icon: textArray[randomNumber] ,
+	  position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()),
+      type: 'info'
+		  
+  });
+
+  
+  /*if(humidity>39 && cloud<31 ){
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map ,
+	  icon: textArray[randomNumber] ,
+	  position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()),
+      type: 'info'
+		  
+  }); 
+  }else{
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map ,
+	  icon: textArray[randomNumber] ,
+	  position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()),
+      type: 'info'
+		  
+  }); 
+  }*/
+
+  
+  
+    });
+	
+	
+	
+		//-------------------/user select location -----------------------------
+//--------------marker look-----------------------
+       /* var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+        var icons = {
+          parking: {
+            icon: 'yes1.png'
+          },
+          library: {
+            icon: 'no1.png'
+          },
+          info: {
+            icon: 'yes1.png'
+          }
+        };
+
+        var features = [
+          {
+            position: new google.maps.LatLng(	24.774265, 	46.738586),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(	26.399250, 49.984360),
+            type: 'info'
+          }, {
+            position: new google.maps.LatLng(	21.543333, 39.172777999999994),
+            type: 'info'
+          }
+        ];
+		
+		//reset icons after checking the condition .. not complete 
+		//markersArray[0].setAnimation(google.maps.Animation.BOUNCE);
+
+        // Create markers.
+        features.forEach(function(feature) {
+          var marker = new google.maps.Marker({
+            position: feature.position,
+            icon: icons[feature.type].icon,
+            map: map
+          });
+        }); */
+		//--------------/marker look-----------------------
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCct7K49jjt-NyQcECt7cb68oIAEyA7Exo&callback=initMap">
+    </script>
+	
+	
+
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="js/creative.min.js"></script>
+
+</body>
+
+</html>
